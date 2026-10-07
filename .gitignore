@@ -1,0 +1,45 @@
+# Python environments, caches and generated packages
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+cookies*.txt
+cookies*.json
+
+# Runtime media, model weights and private analysis evidence
+.cache/
+cache/
+models/
+*.mp4
+*.mkv
+*.mov
+*.webm
+*.mp3
+*.wav
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.zip
+
+# Editor / OS files
+.idea/
+.vscode/
+.DS_Store
+*~

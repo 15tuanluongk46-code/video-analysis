@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "video-analyzer": {
+      "command": "/ABSOLUTE/PATH/video-analysis-full/mcp/video-analyzer/.venv/bin/python",
+      "args": ["-m", "video_analyzer.server"]
+    }
+  }
+}
