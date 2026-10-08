@@ -3,6 +3,33 @@ from pathlib import Path
 import pytest
 
 from video_analyzer.analysis.media import MediaError, extract_audio, format_timestamp, probe
+from video_analyzer.analysis import media
+
+
+@pytest.mark.parametrize("tool", ["ffmpeg", "ffprobe"])
+def test_tool_fallback_uses_current_home(tmp_path, monkeypatch, tool):
+    executable = tmp_path / ".local" / "bin" / tool
+    executable.parent.mkdir(parents=True)
+    executable.write_text("#!/bin/sh\nexit 0\n")
+    executable.chmod(0o755)
+    monkeypatch.setattr(media.shutil, "which", lambda name: None)
+    monkeypatch.setattr(Path, "home", lambda: tmp_path)
+    assert getattr(media, f"{tool}_path")() == str(executable)
+
+
+@pytest.mark.parametrize("tool", ["ffmpeg", "ffprobe"])
+def test_tool_missing_from_path_and_current_home(tmp_path, monkeypatch, tool):
+    monkeypatch.setattr(media.shutil, "which", lambda name: None)
+    monkeypatch.setattr(Path, "home", lambda: tmp_path)
+    with pytest.raises(MediaError, match=tool):
+        getattr(media, f"{tool}_path")()
+
+
+@pytest.mark.parametrize("tool", ["ffmpeg", "ffprobe"])
+def test_tool_path_takes_precedence(monkeypatch, tool):
+    expected = f"/custom/bin/{tool}"
+    monkeypatch.setattr(media.shutil, "which", lambda name: expected)
+    assert getattr(media, f"{tool}_path")() == expected
 
 
 def test_probe_metadata(tiny_video: Path):

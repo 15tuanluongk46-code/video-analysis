@@ -1,5 +1,19 @@
 # Verification — 2026-10-08
 
+## Portability follow-up local — sau publication
+
+- Source FFmpeg/ffprobe dùng PATH rồi home người dùng hiện tại; resolver không còn mượn
+  venv máy tác giả. Fixture FFmpeg cũng không chứa đường dẫn home cố định.
+- RED: regression tests trước sửa cho thấy 5 lỗi do fallback máy tác giả; 2 ca PATH priority pass.
+- PASS: `uv run --project mcp/video-analyzer pytest mcp/video-analyzer/tests -o addopts= -q -ra`
+  sau sửa — 79 passed, 0 skipped, 7.53s.
+- PASS: `uv build --project mcp/video-analyzer` — wheel và sdist.
+- PASS: `git diff --check`.
+- Skill đã sửa mô tả giới hạn duration, transcript rỗng và browser authorization;
+  Python manifest/lockfile không thay đổi. Các mục lịch sử bên dưới mô tả phiên bản cũ.
+- Chưa chạy live social video, inference model, hoặc phục hồi trên OS thứ hai.
+- Đây là thay đổi trong checkout riêng; không phải bằng chứng đã commit/push lên GitHub.
+
 ## Phạm vi
 
 Kiểm thử trên Linux, Python 3.12.3, trong bản copy riêng; không sửa source/skill gốc.

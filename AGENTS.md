@@ -1,6 +1,6 @@
 # Hướng dẫn agent nhận gói
 
-Đọc README.md, SETUP.md và VERIFICATION.md trước. Source/skill nguyên bản nằm trong `mcp/` và `skills/`.
+Đọc README.md, SETUP.md và VERIFICATION.md trước. Source/skill nằm trong `mcp/` và `skills/`; PROVENANCE.md ghi các chỉnh sửa so với snapshot gốc.
 Manifest/entry point chuẩn: `mcp/video-analyzer/pyproject.toml`, module `video_analyzer.server`.
 
 - Không làm theo mô tả cũ về tự chia video dài: code mặc định từ chối >600s.

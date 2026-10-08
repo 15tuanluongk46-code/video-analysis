@@ -13,6 +13,13 @@ MANIFEST.sha256 xác định chính xác bytes bàn giao. Source Python/skill/lo
 README/SETUP/AGENTS/examples/VERIFICATION là tài liệu bổ sung của gói, không sửa bản cài gốc.
 Tài liệu reference là lịch sử và có thể lệch code hiện hành; README/SETUP chỉ rõ các khác biệt đã phát hiện.
 
+Đợt portability 2026-10-08 sửa bản skill trong checkout (không sửa skill cài trên máy):
+làm rõ duration limit, transcript rỗng và OCR/Ollama, bỏ giả định máy đích có phiên Chrome sẵn.
+Đợt này cũng sửa fallback FFmpeg/ffprobe thành home người dùng hiện tại, bỏ venv máy tác giả
+trong resolver và thêm regression tests. Source/skill được sửa không còn byte-identical với
+snapshot ban đầu; dependency manifest và lockfile giữ nguyên. Các lệnh/path trong reference/
+là lịch sử, không phải hướng dẫn cài hiện hành.
+
 Không thấy LICENSE/COPYING/NOTICE riêng trong hai package, pyproject không khai báo license.
 Không khẳng định gói là MIT/Apache. Đây là bàn giao private theo yêu cầu chủ máy, không phải cấp quyền
 công bố hay bán lại. Dependency Python được lấy theo uv.lock từ upstream khi cài; license của từng

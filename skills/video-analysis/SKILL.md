@@ -27,7 +27,7 @@ Trả lời câu hỏi THẬT của user dựa trên evidence thật (transcript
 1. `video_inspect(url)`.
 2. `CACHED` → `video_get_evidence(cache_id)` luôn (đừng phân tích lại). `READY` → `video_analyze` rồi poll `video_job_status` (10–20s/lần, báo user là đang chạy).
 3. Đọc evidence THEO THỨ TỰ RẺ → ĐẮT:
-   a. **Metadata + transcript** (ffprobe: duration, resolution, fps, audio; transcript rỗng = video không lời, thường là nhạc/SFX).
+   a. **Metadata + transcript** (ffprobe: duration, resolution, fps, audio). Transcript rỗng không chứng minh video không lời: kiểm tra lỗi transcribe, metadata và bằng chứng audio trước khi kết luận.
    b. **OCR chữ trên màn hình** — với video UI/screen-recording/text-heavy đây là nguồn thông tin chính. Chạy `scripts/ocr_timeline.py <cache_dir>/frames` (tesseract eng+vie, tự resize 1920px) → timeline text theo timestamp. Không cần vision cho phần chữ.
    c. **Vision chỉ 2–3 frame key** (frame có UI/overlay quan trọng nhất), dùng subagent `vision` với ảnh ≤900px, ≤40KB, **1 ảnh/call**. Nếu bị "attachments too large"/compaction → giảm còn 1 ảnh nhỏ hơn và thử lại, KHÔNG gửi 3–4 ảnh một lúc.
 4. Trả lời:
@@ -44,7 +44,7 @@ Từ bản MCP có resolver (2026-09), X/Twitter/TikTok/IG/FB **không cần Chr
 
 ## Chrome fallback (chỉ khi private/DRM/bot-check thật)
 
-1. Dùng skill `chrome-ops` (Chrome AI, CDP 9222 — đã đăng nhập sẵn X/FB/IG...), mở URL bài viết.
+1. Dùng `chrome-ops` hoặc browser tool tương đương được host cho phép; chọn đúng profile/endpoint và xác minh phiên đăng nhập, không mặc định máy nhận đã có CDP 9222 hay tài khoản. Mở URL bài viết được người dùng cho phép truy cập.
 2. Đọc network request của player để lấy URL media trực tiếp (`.mp4`, `.m3u8` — thường là `video.twimg.com`, `*.cdninstagram.com`, `*.fbcdn.net`...).
 3. Gọi lại `video_analyze(url, resolved_media_url="<media URL>")` — evidence giữ nguyên `source_url` gốc.
 4. Không lấy được (DRM/paywall/private) → dừng và báo đúng lý do.
@@ -102,8 +102,8 @@ Nguồn framework tham khảo: bài "Make your product videos look expensive (Ap
 ## Giới hạn cần nhớ
 
 - Chỉ http/https, chặn host nội bộ (SSRF guard); 1 video/lần, không playlist.
-- Video > 10 phút: chỉ phân tích tối đa 5 cửa sổ, tổng ≤ 600s — `analyzed_intervals` nói rõ đã phân tích đoạn nào, không suy đoán phần còn lại.
+- Mặc định video dài hơn `max_duration_seconds=600` bị từ chối với `DURATION_LIMITED`; bản code kèm repo chưa có tự chia 5 cửa sổ. Đề nghị một đoạn ngắn hơn; không tự tăng giới hạn hoặc hứa đã phân tích phần chưa chạy. Dùng `analyzed_intervals` thực tế khi báo cáo.
 - Download ≤ 750MB; cache ≤ 5GB, TTL 24h.
-- Ollama tắt → vẫn có transcript + metadata + OCR, phần hình ảnh báo `VISION_UNAVAILABLE`.
+- Ollama tắt → phần hình ảnh có thể báo `VISION_UNAVAILABLE`. Metadata/transcript chỉ có nếu các bước tương ứng thành công; OCR là helper riêng, không tự chạy trong pipeline.
 - Không audio → `NO_AUDIO`, vẫn phân tích hình ảnh.
 - Video dài: whisper `small` chạy CPU, transcribe có thể mất vài phút — báo user là đang chạy, không im lặng.

@@ -102,8 +102,9 @@ Dùng **Python của venv MCP**, không dùng system Python thiếu yt-dlp:
 ```
 
 URL đầu tiên chỉ minh họa cú pháp; thay bằng URL video được quyền truy cập.
-Resolver có fallback `/home/sss/.../.venv/bin/python` nhưng cuối cùng dùng `sys.executable`:
-lệnh trên bảo đảm chạy đúng interpreter. FFmpeg/ffprobe trên PATH tránh fallback `/home/sss/.local/bin`.
+Resolver dùng yt-dlp trên PATH, sau đó module qua `sys.executable`:
+lệnh trên bảo đảm chạy đúng interpreter, không mượn venv của máy tác giả.
+FFmpeg/ffprobe ưu tiên PATH rồi tìm trong `~/.local/bin` của người dùng hiện tại.
 Không tạo symlink giả về home máy nguồn. Helper resolver có thể in signed media URL:
 không đưa output đó vào tài liệu public hoặc log chia sẻ.
 

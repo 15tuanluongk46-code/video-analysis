@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-FFMPEG = shutil.which("ffmpeg") or "/home/sss/.local/bin/ffmpeg"
+FFMPEG = shutil.which("ffmpeg") or str(Path.home() / ".local" / "bin" / "ffmpeg")
 
 
 def _run(cmd: list[str]) -> bool:

@@ -10,9 +10,6 @@ from pathlib import Path
 
 from ..models import MediaInfo
 
-FFMPEG_FALLBACK = "/home/sss/.local/bin/ffmpeg"
-FFPROBE_FALLBACK = "/home/sss/.local/bin/ffprobe"
-
 
 class MediaError(Exception):
     """Lỗi xử lý media (file hỏng, thiếu ffmpeg, ffprobe thất bại)."""
@@ -22,8 +19,9 @@ def ffmpeg_path() -> str:
     found = shutil.which("ffmpeg")
     if found:
         return found
-    if Path(FFMPEG_FALLBACK).exists():
-        return FFMPEG_FALLBACK
+    fallback = Path.home() / ".local" / "bin" / "ffmpeg"
+    if fallback.is_file():
+        return str(fallback)
     raise MediaError("Không tìm thấy ffmpeg trên máy")
 
 
@@ -31,8 +29,9 @@ def ffprobe_path() -> str:
     found = shutil.which("ffprobe")
     if found:
         return found
-    if Path(FFPROBE_FALLBACK).exists():
-        return FFPROBE_FALLBACK
+    fallback = Path.home() / ".local" / "bin" / "ffprobe"
+    if fallback.is_file():
+        return str(fallback)
     raise MediaError("Không tìm thấy ffprobe trên máy")
 
 

@@ -6,14 +6,13 @@ Usage:
 
 X/Twitter: vxtwitter -> fxtwitter public APIs.
 Other hosts (TikTok/Instagram/Facebook/YouTube/...): yt-dlp
-(system CLI -> MCP venv python -> current python module).
+(system CLI -> current python module).
 
 Prints the direct media URL on stdout. Exit 0 on success, 1 on failure.
 """
 from __future__ import annotations
 
 import json
-import os
 import re
 import shutil
 import subprocess
@@ -23,8 +22,6 @@ import urllib.request
 TWEET_RE = re.compile(
     r"^https?://(?:www\.|mobile\.)?(?:x|twitter)\.com/([A-Za-z0-9_]+)/status(?:es)?/(\d+)"
 )
-
-MCP_VENV_PYTHON = "/home/sss/AI-Home/mcp/video-analyzer/.venv/bin/python"
 
 
 def resolve_twitter(url: str, timeout: float = 8.0) -> str | None:
@@ -78,8 +75,6 @@ def resolve_ytdlp(url: str) -> str | None:
     candidates: list[list[str]] = []
     if shutil.which("yt-dlp"):
         candidates.append(["yt-dlp"])
-    if os.path.exists(MCP_VENV_PYTHON):
-        candidates.append([MCP_VENV_PYTHON, "-m", "yt_dlp"])
     candidates.append([sys.executable, "-m", "yt_dlp"])
     for cmd in candidates:
         resolved = _ytdlp_url(cmd, url)

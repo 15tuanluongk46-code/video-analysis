@@ -16,8 +16,8 @@ lockfile và toàn bộ tests. Đọc [SETUP.md](SETUP.md) để cài trên máy
 
 ## Nội dung
 
-- `skills/video-analysis/`: skill và helper nguyên bản, không sửa bản đang sử dụng.
-- `mcp/video-analyzer/`: source Python, manifest, lockfile, tests nguyên bản.
+- `skills/video-analysis/`: skill đã hiệu chỉnh giới hạn thực tế; helper không còn mượn venv máy tác giả. Không sửa bản cài trên máy nguồn.
+- `mcp/video-analyzer/`: source Python, manifest, lockfile và tests; đã bổ sung regression tests cho đường dẫn portable.
 - `reference/`: thiết kế và kế hoạch triển khai lịch sử; không phải bằng chứng tính năng hiện tại.
 - `examples/mcp-stdio.json`: cấu hình stdio mẫu trung lập cho client dùng `mcpServers`.
 - `AGENTS.md`: quy tắc vận hành an toàn, giới hạn thực tế ưu tiên hơn tài liệu cũ.
@@ -29,14 +29,14 @@ cache video, transcript riêng tư hoặc cấu hình tài khoản. Cần Intern
 
 ## Giới hạn quan trọng
 
-1. Mặc định video quá 600 giây bị từ chối (`DURATION_LIMITED`). Code chưa tự chia 5 cửa sổ
-   như phần cuối SKILL.md mô tả. Không hứa phân tích đoạn chưa chạy.
+1. Mặc định video quá 600 giây bị từ chối (`DURATION_LIMITED`). Code chưa tự chia 5 cửa sổ;
+   SKILL.md đã được sửa để khớp giới hạn này. Không hứa phân tích đoạn chưa chạy.
 2. OCR là helper độc lập, chưa tự nối vào pipeline MCP. Transcript rỗng **không chứng minh**
    video không có lời: phải kiểm tra lỗi transcribe và metadata.
 3. `vision` subagent và `chrome-ops` là tích hợp tùy chọn của host gốc, không phải phụ thuộc
    Python. Máy đích có thể dùng công cụ vision/browser tương đương; không tự cài hay đổi MCP flags.
 4. Không bảo đảm tải được video private/DRM/paywall hoặc mọi URL social.
-5. Các đường dẫn `/home/sss` trong fallback code được giữ nguyên để bảo toàn source;
-   SETUP hướng dẫn dùng PATH và đúng interpreter để không cần những fallback đó.
+5. FFmpeg/ffprobe ưu tiên PATH, sau đó `~/.local/bin` của người dùng hiện tại.
+   Resolver dùng yt-dlp trên PATH hoặc interpreter đang chạy, không mượn venv máy tác giả.
 6. Không có license riêng được tìm thấy cho source nội bộ. Không tự gán MIT/Apache hoặc
    suy diễn quyền công bố/phân phối rộng. Gói này bàn giao riêng theo yêu cầu chủ máy.
