@@ -44,6 +44,9 @@ cache video, transcript riêng tư hoặc cấu hình tài khoản. Cần Intern
 4. Không bảo đảm tải được video private/DRM/paywall hoặc mọi URL social.
 5. FFmpeg/ffprobe ưu tiên PATH, sau đó `~/.local/bin` của người dùng hiện tại.
    Resolver dùng yt-dlp trên PATH hoặc interpreter đang chạy, không mượn venv máy tác giả.
+6. Cấu hình máy đã chạy được: Intel Core i7 gen 14, 32 GB RAM, NVIDIA RTX 3060 12 GB VRAM
+   (đã chạy vision `qwen2.5vl:7b`). Chưa có mức RAM/VRAM tối thiểu đã benchmark — chi tiết và
+   ước lượng trong [SETUP.md](SETUP.md).
 
 ## Giấy phép
 

@@ -17,7 +17,28 @@ sudo apt-get install ffmpeg tesseract-ocr tesseract-ocr-eng tesseract-ocr-vie im
 ImageMagick là tùy chọn để resize OCR. Cài `uv` theo https://docs.astral.sh/uv/getting-started/installation/.
 Whisper `small` CPU/int8 được tải lần đầu khi transcribe. Ollama và `qwen2.5vl:7b`
 cần cài riêng cho vision: https://ollama.com/download . Model weights không nằm trong gói.
-Không có cam kết RAM/VRAM tối thiểu; phần vision có thể tốn nhiều RAM và thời gian.
+Không có cam kết RAM/VRAM tối thiểu đã đo; xem bảng cấu hình tham chiếu bên dưới.
+
+### Cấu hình máy đã chạy được (known-good)
+
+Cấu hình dưới đây do chủ repo xác nhận là đã chạy được, gồm cả phần vision với
+`qwen2.5vl:7b`. Đây là **một điểm dữ liệu thực tế**, không phải mức tối thiểu đã benchmark:
+
+| Thành phần | Giá trị | Ghi chú |
+|---|---|---|
+| CPU | Intel Core i7 thế hệ 14 | Whisper `small` CPU/int8 chạy ổn |
+| RAM | 32 GB | Đủ cho transcribe + frame extraction + cache |
+| GPU | NVIDIA RTX 3060 12 GB VRAM | Đã chạy `qwen2.5vl:7b` qua Ollama thành công |
+
+Ước lượng chưa kiểm chứng (không phải yêu cầu chính thức):
+
+- Chỉ transcript + OCR: CPU-only vẫn chạy, không cần GPU, nhưng chậm hơn rõ rệt.
+- Vision `qwen2.5vl:7b` (Q4): cần GPU khoảng 8 GB VRAM trở lên; GPU 4 GB như GTX 1050 Ti
+  không đủ, pipeline sẽ trả `VISION_UNAVAILABLE`.
+- Dung lượng đĩa: chừa ít nhất ~10 GB, vì cache cap 5 GiB, mỗi video tải tối đa 750 MiB,
+  cộng model weights của Whisper/Ollama.
+- Thiếu GPU/VRAM thì vẫn dùng được MCP ở chế độ transcript; không được báo đó là phân tích
+  hình ảnh thành công.
 
 ## 2. Kiểm tra toàn vẹn và cài dependency
 
