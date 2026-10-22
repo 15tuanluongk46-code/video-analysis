@@ -2,6 +2,8 @@
 name = "video-analyzer"
 version = "0.1.0"
 description = "MCP server: analyze video from URL (transcript + vision + evidence) for OpenCode"
+license = "MIT"
+authors = [{ name = "15tuanluongk46-code" }]
 requires-python = ">=3.11"
 dependencies = [
     "mcp>=1.9.0,<2",
@@ -10,6 +12,10 @@ dependencies = [
     "faster-whisper>=1.1.0",
     "pillow>=10.4",
 ]
+
+[project.urls]
+Repository = "https://github.com/15tuanluongk46-code/video-analysis"
+Issues = "https://github.com/15tuanluongk46-code/video-analysis/issues"
 
 [project.scripts]
 video-analyzer = "video_analyzer.server:main"

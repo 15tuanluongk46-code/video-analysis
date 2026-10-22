@@ -20,9 +20,13 @@ trong resolver và thêm regression tests. Source/skill được sửa không c�
 snapshot ban đầu; dependency manifest và lockfile giữ nguyên. Các lệnh/path trong reference/
 là lịch sử, không phải hướng dẫn cài hiện hành.
 
-Không thấy LICENSE/COPYING/NOTICE riêng trong hai package, pyproject không khai báo license.
-Không khẳng định gói là MIT/Apache. Đây là bàn giao private theo yêu cầu chủ máy, không phải cấp quyền
-công bố hay bán lại. Dependency Python được lấy theo uv.lock từ upstream khi cài; license của từng
+Không thấy LICENSE/COPYING/NOTICE riêng trong hai package lúc đóng gói; pyproject khi đó không khai báo license.
+Gói ban đầu được bàn giao private, không kèm cấp quyền công bố hay bán lại.
+
+Ngày 2026-10-22 chủ sở hữu quyết định phát hành gói này như mã nguồn mở theo giấy phép **MIT**
+(xem `LICENSE`, giữ nguyên thông báo copyright). Quyết định này áp dụng cho source/skill/tài liệu
+do chủ sở hữu tạo trong repo, không mở rộng quyền cho dependency, model weights hay nội dung
+của bên thứ ba. Dependency Python được lấy theo uv.lock từ upstream khi cài; license của từng
 dependency vẫn áp dụng. Không nhúng dependency binaries, model weights hay thư viện vendor.
 
 Nguồn tham khảo trong skill: bài "Make your product videos look expensive (Apple Framework)"

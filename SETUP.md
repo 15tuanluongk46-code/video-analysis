@@ -21,16 +21,15 @@ Không có cam kết RAM/VRAM tối thiểu; phần vision có thể tốn nhi�
 
 ## 2. Kiểm tra toàn vẹn và cài dependency
 
-Clone repo Private bằng tài khoản đã được cấp quyền:
+Clone repo công khai (không cần quyền truy cập đặc biệt):
 
 ```bash
-gh auth login
-gh repo clone 15tuanluongk46-code/video-analysis
+git clone https://github.com/15tuanluongk46-code/video-analysis.git
 cd video-analysis
 ```
 
-Nếu GitHub CLI đã đăng nhập đúng tài khoản thì bỏ qua `gh auth login`.
-Không đặt token vào clone URL. Có thể dùng bản ZIP đã bàn giao thay cho clone;
+Hoặc dùng GitHub CLI nếu đã đăng nhập: `gh repo clone 15tuanluongk46-code/video-analysis`.
+Không đặt token vào clone URL. Có thể tải ZIP từ GitHub thay cho clone;
 giải nén vào một thư mục cố định. Những lệnh sau chạy từ thư mục gốc repo/gói:
 
 ```bash

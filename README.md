@@ -1,14 +1,19 @@
-# Video Analysis — gói bàn giao đầy đủ mã nguồn
+# Video Analysis — skill + MCP server phân tích video
 
-Repository riêng tư: https://github.com/15tuanluongk46-code/video-analysis
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](mcp/video-analyzer/pyproject.toml)
+
+Repository công khai: https://github.com/15tuanluongk46-code/video-analysis
 Chứa mã nguồn để clone và cập nhật; không chỉ là bản ZIP lưu trữ.
 
 ```bash
+git clone https://github.com/15tuanluongk46-code/video-analysis.git
+# hoặc
 gh repo clone 15tuanluongk46-code/video-analysis
 ```
 
 Chạy các lệnh trong SETUP.md từ thư mục `video-analysis` vừa clone.
-Tài khoản GitHub dùng để clone cần có quyền truy cập repo Private.
+Repo công khai nên không cần quyền truy cập đặc biệt; chỉ cần Internet để clone và cài dependency.
 
 Gói gồm skill `video-analysis`, hai helper OCR/resolve URL, MCP `video-analyzer`,
 lockfile và toàn bộ tests. Đọc [SETUP.md](SETUP.md) để cài trên máy khác và
@@ -21,7 +26,8 @@ lockfile và toàn bộ tests. Đọc [SETUP.md](SETUP.md) để cài trên máy
 - `reference/`: thiết kế và kế hoạch triển khai lịch sử; không phải bằng chứng tính năng hiện tại.
 - `examples/mcp-stdio.json`: cấu hình stdio mẫu trung lập cho client dùng `mcpServers`.
 - `AGENTS.md`: quy tắc vận hành an toàn, giới hạn thực tế ưu tiên hơn tài liệu cũ.
-- `PROVENANCE.md`, `MANIFEST.sha256`: nguồn gốc, phạm vi license và checksum từng file.
+- `PROVENANCE.md`, `MANIFEST.sha256`: nguồn gốc, checksum từng file.
+- `LICENSE`: giấy phép MIT.
 
 Đây là **source bundle có hướng dẫn cài**, không phải bản chạy offline một-click.
 Không kèm `.venv`, binaries, model weights, credentials, cookies, browser profile,
@@ -38,5 +44,22 @@ cache video, transcript riêng tư hoặc cấu hình tài khoản. Cần Intern
 4. Không bảo đảm tải được video private/DRM/paywall hoặc mọi URL social.
 5. FFmpeg/ffprobe ưu tiên PATH, sau đó `~/.local/bin` của người dùng hiện tại.
    Resolver dùng yt-dlp trên PATH hoặc interpreter đang chạy, không mượn venv máy tác giả.
-6. Không có license riêng được tìm thấy cho source nội bộ. Không tự gán MIT/Apache hoặc
-   suy diễn quyền công bố/phân phối rộng. Gói này bàn giao riêng theo yêu cầu chủ máy.
+
+## Giấy phép
+
+Phát hành theo giấy phép [MIT](LICENSE) © 2026 15tuanluongk46-code.
+Xem [PROVENANCE.md](PROVENANCE.md) cho lịch sử license của gói.
+
+Dependency Python được cài từ upstream theo `uv.lock` và giữ license riêng của từng gói;
+repo không nhúng dependency binaries, model weights hay thư viện vendor.
+Bài viết tham khảo trong `skills/video-analysis/SKILL.md` ("Make your product videos look expensive
+(Apple Framework)" của leo, [@leomeethewoo](https://www.instagram.com/leomeethewoo/)) chỉ giữ URL,
+không kèm bản sao nội dung.
+
+## Đóng góp
+
+- Mở issue trước với thay đổi lớn hoặc thay đổi hành vi pipeline.
+- Fork → tạo branch → chạy `uv sync --locked` và `pytest` theo [SETUP.md](SETUP.md) → mở pull request.
+- Nêu rõ phần nào đã kiểm chứng thật (video thật, model thật) và phần nào chỉ là mock.
+- Không commit `.venv`, cache, media, model weights hoặc credentials.
+- Nếu sửa file có trong `MANIFEST.sha256`, cập nhật lại checksum tương ứng (không hash chính manifest).

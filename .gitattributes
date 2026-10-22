@@ -1,0 +1,13 @@
+# Keep line endings identical on every OS so `sha256sum -c MANIFEST.sha256` matches.
+* text=auto eol=lf
+
+# Explicit binaries (not present in this repo today, kept for future additions)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.mp4 binary
+*.webm binary
+*.mp3 binary
+*.wav binary
